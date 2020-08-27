@@ -15,8 +15,11 @@ import android.widget.Button;
 import android.widget.Chronometer;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.lifecycle.ViewModelProvider;
 
 import com.example.rgbcolorgame.R;
+import com.example.rgbcolorgame.activity.domain.Rezultat;
+import com.example.rgbcolorgame.activity.viewModel.ViewModel;
 
 import java.util.Random;
 import java.util.Timer;
@@ -43,7 +46,7 @@ public class GameActivity extends AppCompatActivity {
     private Button btnLevo;
 
     // Button
-    private Button pauseBtn;
+    private Button btnPause;
 
     // Position
     private float arrowUpX;
@@ -60,7 +63,7 @@ public class GameActivity extends AppCompatActivity {
     private Timer timer = new Timer();
 
     // Status Check
-    private boolean pause_flg = false;
+    // private boolean pause_flg = false;
 
     private Chronometer chronometer;
 
@@ -68,6 +71,7 @@ public class GameActivity extends AppCompatActivity {
     private int skor = 0;
     private int brojRundi = 0;
     private long protekleMiliSekunde = 0;
+    ViewModel viewModel;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -80,11 +84,19 @@ public class GameActivity extends AppCompatActivity {
             srediPomeranje(levelSpeed);
             srediDugmice();
             srediListenere();
+            srediViewModel();
         } else {
             pokreniHronometar();
             srediDugmice();
             srediListenere();
+            srediViewModel();
         }
+    }
+
+    private void srediViewModel() {
+        viewModel = new ViewModelProvider(this,
+                new ViewModelProvider.AndroidViewModelFactory(this.getApplication()))
+                .get(ViewModel.class);
     }
 
     private void srediIntent() {
@@ -112,7 +124,7 @@ public class GameActivity extends AppCompatActivity {
         int red = r.nextInt((high - low) + 1) + low;
         int green = r.nextInt((high - low) + 1) + low;
         int blue = r.nextInt((high - low) + 1) + low;
-        pauseBtn.setText("Pogodi boju: RGB (" + red + ", " + green + ", " + blue + ")");
+        btnPause.setText("Guess the color: RGB (" + red + ", " + green + ", " + blue + ")");
 
         int donja = 1;
         int gornja = 4;
@@ -184,7 +196,7 @@ public class GameActivity extends AppCompatActivity {
                 handler.post(new Runnable() {
                     @Override
                     public void run() {
-                        changePos();
+                        promeniPoziciju();
                     }
                 });
             }
@@ -197,7 +209,7 @@ public class GameActivity extends AppCompatActivity {
         btnDole = findViewById(R.id.btnDown);
         btnDesno = findViewById(R.id.btnRight);
         btnLevo = findViewById(R.id.btnLeft);
-        pauseBtn = findViewById(R.id.btnPause);
+        btnPause = findViewById(R.id.btnPause);
         chronometer = findViewById(R.id.chronometer);
 
         chronometer.setFormat("Time: %s");
@@ -211,14 +223,6 @@ public class GameActivity extends AppCompatActivity {
     }
 
     public void srediListenere() {
-        if (levelSpeed != 0) {
-            pauseBtn.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    pausePushed(levelSpeed);
-                }
-            });
-        }
 
         btnGore.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -235,6 +239,8 @@ public class GameActivity extends AppCompatActivity {
                         chronometer.stop();
                         protekleMiliSekunde = SystemClock.elapsedRealtime() - chronometer.getBase();
                         int brSek = Math.round(protekleMiliSekunde / 1000);
+                        Rezultat rezultat = new Rezultat(skor, "2020-05-05", brSek, player);
+                        viewModel.insert(rezultat);
                     }
                     Log.d("SKOR", skor + "");
                 } else {
@@ -259,6 +265,8 @@ public class GameActivity extends AppCompatActivity {
                         chronometer.stop();
                         protekleMiliSekunde = SystemClock.elapsedRealtime() - chronometer.getBase();
                         int brSek = Math.round(protekleMiliSekunde / 1000);
+                        Rezultat rezultat = new Rezultat(skor, "2020-05-05", brSek, player);
+                        viewModel.insert(rezultat);
                     }
                     Log.d("SKOR", skor + "");
                 } else {
@@ -283,6 +291,8 @@ public class GameActivity extends AppCompatActivity {
                         chronometer.stop();
                         protekleMiliSekunde = SystemClock.elapsedRealtime() - chronometer.getBase();
                         int brSek = Math.round(protekleMiliSekunde / 1000);
+                        Rezultat rezultat = new Rezultat(skor, "2020-05-05", brSek, player);
+                        viewModel.insert(rezultat);
                     }
                     Log.d("SKOR", skor + "");
                 } else {
@@ -307,6 +317,8 @@ public class GameActivity extends AppCompatActivity {
                         chronometer.stop();
                         protekleMiliSekunde = SystemClock.elapsedRealtime() - chronometer.getBase();
                         int brSek = Math.round(protekleMiliSekunde / 1000);
+                        Rezultat rezultat = new Rezultat(skor, "2020-05-05", brSek, player);
+                        viewModel.insert(rezultat);
                     }
 
                     Log.d("SKOR", skor + "");
@@ -316,6 +328,9 @@ public class GameActivity extends AppCompatActivity {
                 }
             }
         });
+
+        btnPause.setClickable(false);
+
     }
 
     private void vratiVidljivost() {
@@ -330,7 +345,7 @@ public class GameActivity extends AppCompatActivity {
         chronometer.start();
     }
 
-    public void changePos() {
+    public void promeniPoziciju() {
         // Up
         arrowUpY -= 10;
         if (btnGore.getY() + btnGore.getHeight() < 0) {
@@ -369,35 +384,36 @@ public class GameActivity extends AppCompatActivity {
 
     }
 
-    public void pausePushed(int levelSpeed) {
+    /*
+        public void pausePushed(int levelSpeed) {
 
-        if (!pause_flg) {
+            if (!pause_flg) {
 
-            pause_flg = true;
+                pause_flg = true;
 
-            // Stop the timer.
-            timer.cancel();
-            timer = null;
-        } else {
+                // Stop the timer.
+                timer.cancel();
+                timer = null;
+            } else {
 
-            pause_flg = false;
+                pause_flg = false;
 
-            // Create and Start the timer.
-            timer = new Timer();
-            timer.schedule(new TimerTask() {
-                @Override
-                public void run() {
-                    handler.post(new Runnable() {
-                        @Override
-                        public void run() {
-                            changePos();
-                        }
-                    });
-                }
-            }, 0, levelSpeed);
+                // Create and Start the timer.
+                timer = new Timer();
+                timer.schedule(new TimerTask() {
+                    @Override
+                    public void run() {
+                        handler.post(new Runnable() {
+                            @Override
+                            public void run() {
+                                promeniPoziciju();
+                            }
+                        });
+                    }
+                }, 0, levelSpeed);
+            }
         }
-    }
-
+    */
     @Override
     protected void onPause() {
         super.onPause();

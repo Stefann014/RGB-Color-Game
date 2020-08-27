@@ -1,5 +1,6 @@
 package com.example.rgbcolorgame.activity.domain;
 
+import androidx.room.ColumnInfo;
 import androidx.room.Entity;
 import androidx.room.PrimaryKey;
 
@@ -12,15 +13,26 @@ public class Rezultat implements Serializable {
     int rezultatID;
     int rezultat;
     String datum;
+    @ColumnInfo(name = "vreme_sekundi")
+    int vremeSekundi;
     String igrac;
 
     public Rezultat() {
     }
 
-    public Rezultat(int rezultat, String datum, String igrac) {
+    public Rezultat(int rezultat, String datum, int vremeSekundi, String igrac) {
         this.rezultat = rezultat;
         this.datum = datum;
+        this.vremeSekundi = vremeSekundi;
         this.igrac = igrac;
+    }
+
+    public int getVremeSekundi() {
+        return vremeSekundi;
+    }
+
+    public void setVremeSekundi(int vremeSekundi) {
+        this.vremeSekundi = vremeSekundi;
     }
 
     public int getRezultatID() {
@@ -55,13 +67,4 @@ public class Rezultat implements Serializable {
         this.igrac = igrac;
     }
 
-    @Override
-    public String toString() {
-        return "Rezultat{" +
-                "rezultatID=" + rezultatID +
-                ", rezultat=" + rezultat +
-                ", datum='" + datum + '\'' +
-                ", igrac='" + igrac + '\'' +
-                '}';
-    }
 }
