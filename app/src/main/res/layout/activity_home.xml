@@ -7,12 +7,12 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="#353537"
-    tools:context=".PocetniActivity">
+    tools:context=".activity.HomeActivity">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/cl"
         android:layout_width="match_parent"
-        android:layout_height="280dp"
+        android:layout_height="wrap_content"
         android:background="@drawable/baner"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
@@ -40,7 +40,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="30dp"
-        android:layout_marginTop="100dp"
+        android:layout_marginTop="70dp"
         android:text="@string/player_name"
         android:textColor="#929497"
         android:textSize="24sp"
@@ -59,27 +59,12 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textView" />
 
-    <Button
-        android:id="@+id/btnPlay"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="220dp"
-        android:layout_marginEnd="220dp"
-        android:layout_marginBottom="80dp"
-        android:text="@string/play"
-        android:textAllCaps="false"
-        android:textColor="#929497"
-        android:textSize="30sp"
-        app:layout_constraintBottom_toTopOf="@+id/button"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
-
     <Spinner
         android:id="@+id/spLevel"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="30dp"
-        android:layout_marginTop="70dp"
+        android:layout_marginTop="65dp"
         android:layout_marginEnd="20dp"
         android:textSize="24sp"
         app:layout_constraintEnd_toEndOf="parent"
@@ -91,7 +76,7 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="30dp"
-        android:layout_marginTop="85dp"
+        android:layout_marginTop="58dp"
         android:layout_marginEnd="20dp"
         android:ems="10"
         android:inputType="textCapSentences|textMultiLine"
@@ -104,12 +89,29 @@
         tools:ignore="Autofill,LabelFor" />
 
     <Button
-        android:id="@+id/button"
+        android:id="@+id/btnScoreboard"
         android:layout_width="0dp"
         android:layout_height="136dp"
-        android:layout_marginBottom="50dp"
+        android:layout_marginStart="5dp"
+        android:layout_marginEnd="5dp"
+        android:layout_marginBottom="10dp"
         android:background="@drawable/scoreboard"
         app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <Button
+        android:id="@+id/btnPlay"
+        android:layout_width="180dp"
+        android:layout_height="70dp"
+        android:layout_marginStart="200dp"
+        android:layout_marginEnd="200dp"
+        android:layout_marginBottom="10dp"
+        android:text="@string/play"
+        android:textAllCaps="false"
+        android:textColor="#929497"
+        android:textSize="24sp"
+        app:layout_constraintBottom_toTopOf="@+id/btnScoreboard"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
 </androidx.constraintlayout.widget.ConstraintLayout>
