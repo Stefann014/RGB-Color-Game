@@ -54,7 +54,8 @@ public class HomeActivity extends AppCompatActivity {
         btnScoreBoard.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
+                Intent intent = new Intent(HomeActivity.this, ScoreboardActivity.class);
+                startActivity(intent);
             }
         });
     }
@@ -67,7 +68,7 @@ public class HomeActivity extends AppCompatActivity {
         level.add("Hard");
 
         ArrayAdapter<String> adapter = new ArrayAdapter<>(this,
-                R.layout.spinner_size, level); // ako je greska tu je
+                R.layout.spinner_size, level);
         adapter.setDropDownViewResource(R.layout.spinner_size);
         spLevel.setAdapter(adapter);
         spLevel.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
