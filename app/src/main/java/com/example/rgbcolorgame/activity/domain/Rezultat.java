@@ -1,9 +1,14 @@
 package com.example.rgbcolorgame.activity.domain;
 
+import androidx.room.Entity;
+import androidx.room.PrimaryKey;
+
 import java.io.Serializable;
 
+@Entity(tableName = "rezultat_table")
 public class Rezultat implements Serializable {
 
+    @PrimaryKey(autoGenerate = true)
     int rezultatID;
     int rezultat;
     String datum;
@@ -12,8 +17,7 @@ public class Rezultat implements Serializable {
     public Rezultat() {
     }
 
-    public Rezultat(int rezultatID, int rezultat, String datum, String igrac) {
-        this.rezultatID = rezultatID;
+    public Rezultat(int rezultat, String datum, String igrac) {
         this.rezultat = rezultat;
         this.datum = datum;
         this.igrac = igrac;
@@ -49,5 +53,15 @@ public class Rezultat implements Serializable {
 
     public void setIgrac(String igrac) {
         this.igrac = igrac;
+    }
+
+    @Override
+    public String toString() {
+        return "Rezultat{" +
+                "rezultatID=" + rezultatID +
+                ", rezultat=" + rezultat +
+                ", datum='" + datum + '\'' +
+                ", igrac='" + igrac + '\'' +
+                '}';
     }
 }
