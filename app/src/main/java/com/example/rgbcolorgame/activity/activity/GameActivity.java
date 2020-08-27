@@ -1,4 +1,4 @@
-package com.example.rgbcolorgame.activity;
+package com.example.rgbcolorgame.activity.activity;
 
 import android.annotation.SuppressLint;
 import android.content.Intent;
