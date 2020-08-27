@@ -75,10 +75,16 @@ public class GameActivity extends AppCompatActivity {
         setContentView(R.layout.activity_game);
         srediAtribute();
         srediIntent();
-        pokreniHronometar();
-        srediPomeranje(levelSpeed);
-        srediDugmice();
-        srediListenere();
+        if (levelSpeed != 0) {
+            pokreniHronometar();
+            srediPomeranje(levelSpeed);
+            srediDugmice();
+            srediListenere();
+        } else {
+            pokreniHronometar();
+            srediDugmice();
+            srediListenere();
+        }
     }
 
     private void srediIntent() {
@@ -90,11 +96,11 @@ public class GameActivity extends AppCompatActivity {
             levelSpeed = 0;
         }
         if (level != null && level.equals("Medium")) {
-            levelSpeed = 8;
+            levelSpeed = 16;
         }
 
         if (level != null && level.equals("Hard")) {
-            levelSpeed = 12;
+            levelSpeed = 6;
         }
     }
 
@@ -172,22 +178,18 @@ public class GameActivity extends AppCompatActivity {
         btnLevo.setY(-80.0f);
 
         // Start the timer.
-        if (levelSpeed != 0) {
-            timer.schedule(new TimerTask() {
-                @Override
-                public void run() {
-                    handler.post(new Runnable() {
-                        @Override
-                        public void run() {
-                            changePos();
-                        }
-                    });
-                }
-            }, 0, levelSpeed);
-        } else {
-            pausePushed(12);
-            pauseBtn.setEnabled(false);
-        }
+        timer.schedule(new TimerTask() {
+            @Override
+            public void run() {
+                handler.post(new Runnable() {
+                    @Override
+                    public void run() {
+                        changePos();
+                    }
+                });
+            }
+        }, 0, levelSpeed);
+
     }
 
     private void srediAtribute() {
@@ -209,13 +211,14 @@ public class GameActivity extends AppCompatActivity {
     }
 
     public void srediListenere() {
-
-        pauseBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                pausePushed(levelSpeed);
-            }
-        });
+        if (levelSpeed != 0) {
+            pauseBtn.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    pausePushed(levelSpeed);
+                }
+            });
+        }
 
         btnGore.setOnClickListener(new View.OnClickListener() {
             @Override
