@@ -12,7 +12,7 @@ public class Score implements Serializable {
     @PrimaryKey(autoGenerate = true)
     int rezultatID;
     int rezultat;
-    String datum;
+    String nivo;
     @ColumnInfo(name = "vreme_sekundi")
     int vremeSekundi;
     String igrac;
@@ -20,9 +20,9 @@ public class Score implements Serializable {
     public Score() {
     }
 
-    public Score(int rezultat, String datum, int vremeSekundi, String igrac) {
+    public Score(int rezultat, String nivo, int vremeSekundi, String igrac) {
         this.rezultat = rezultat;
-        this.datum = datum;
+        this.nivo = nivo;
         this.vremeSekundi = vremeSekundi;
         this.igrac = igrac;
     }
@@ -51,12 +51,12 @@ public class Score implements Serializable {
         this.rezultat = rezultat;
     }
 
-    public String getDatum() {
-        return datum;
+    public String getNivo() {
+        return nivo;
     }
 
-    public void setDatum(String datum) {
-        this.datum = datum;
+    public void setNivo(String nivo) {
+        this.nivo = nivo;
     }
 
     public String getIgrac() {

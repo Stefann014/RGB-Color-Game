@@ -14,6 +14,8 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.rgbcolorgame.R;
 import com.example.rgbcolorgame.activity.domain.Score;
 
+import org.jetbrains.annotations.NotNull;
+
 public class ScoreAdapter extends ListAdapter<Score, ScoreAdapter.RezultatHolder> {
 
     private OnItemClickListener listener;
@@ -24,14 +26,14 @@ public class ScoreAdapter extends ListAdapter<Score, ScoreAdapter.RezultatHolder
 
     private static final DiffUtil.ItemCallback<Score> DIFF_CALLBACK = new DiffUtil.ItemCallback<Score>() {
         @Override
-        public boolean areItemsTheSame(Score oldItem, Score newItem) {
+        public boolean areItemsTheSame(@NotNull Score oldItem, @NotNull Score newItem) {
             return oldItem.getRezultatID() == newItem.getRezultatID();
         }
 
         @Override
-        public boolean areContentsTheSame(Score oldItem, Score newItem) {
+        public boolean areContentsTheSame(@NotNull Score oldItem, @NotNull Score newItem) {
             return oldItem.getRezultat() == (newItem.getRezultat()) &&
-                    oldItem.getDatum().equals(newItem.getDatum()) &&
+                    oldItem.getNivo().equals(newItem.getNivo()) &&
                     oldItem.getIgrac().equals(newItem.getIgrac()) &&
                     oldItem.getVremeSekundi() == newItem.getVremeSekundi();
         }
@@ -51,14 +53,8 @@ public class ScoreAdapter extends ListAdapter<Score, ScoreAdapter.RezultatHolder
         Score trenutniScore = getItem(position);
         holder.playerName.setText(" Player: " + " " + trenutniScore.getIgrac() + " ");
         holder.score.setText(" Score: " + trenutniScore.getRezultat() + " ");
-        holder.date.setText(" Date: " + datumZaPrikaz(trenutniScore.getDatum()) + " ");
+        holder.date.setText(" Level: " + trenutniScore.getNivo() + " ");
         holder.time.setText(" Time: " + trenutniScore.getVremeSekundi() + " ");
-    }
-
-    @NonNull
-    private String datumZaPrikaz(String datum) {
-        String[] datumi = datum.split("-");
-        return datumi[2] + "." + datumi[1] + "." + datumi[0];
     }
 
     public Score getRezultatAt(int position) {
@@ -75,7 +71,7 @@ public class ScoreAdapter extends ListAdapter<Score, ScoreAdapter.RezultatHolder
             super(itemView);
             playerName = itemView.findViewById(R.id.txtPlayer);
             score = itemView.findViewById(R.id.txtScore);
-            date = itemView.findViewById(R.id.txtDate);
+            date = itemView.findViewById(R.id.txtLevel);
             time = itemView.findViewById(R.id.txtTime);
 
             itemView.setOnClickListener(new View.OnClickListener() {

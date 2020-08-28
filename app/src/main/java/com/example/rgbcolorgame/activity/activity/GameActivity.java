@@ -72,6 +72,7 @@ public class GameActivity extends AppCompatActivity {
     private int brojRundi = 0;
     private long protekleMiliSekunde = 0;
     ViewModel viewModel;
+    String level;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -102,7 +103,7 @@ public class GameActivity extends AppCompatActivity {
     private void srediIntent() {
         Intent intent = getIntent();
         player = intent.getStringExtra(EXTRA_PLAYER);
-        String level = intent.getStringExtra(EXTRA_LEVEL);
+        level = intent.getStringExtra(EXTRA_LEVEL);
 
         if (level != null && level.equals("Easy")) {
             levelSpeed = 0;
@@ -240,7 +241,7 @@ public class GameActivity extends AppCompatActivity {
                         protekleMiliSekunde = SystemClock.elapsedRealtime() - chronometer.getBase();
                         int brSek = Math.round(protekleMiliSekunde / 1000);
                         skor -= brSek;
-                        Score score = new Score(skor, "2020-05-05", brSek, player);
+                        Score score = new Score(skor, level, brSek, player);
                         viewModel.insert(score);
                         Intent intent = new Intent(GameActivity.this, ScoreboardActivity.class);
                         intent.putExtra(ScoreboardActivity.EXTRA_SCORE, score);
@@ -270,7 +271,7 @@ public class GameActivity extends AppCompatActivity {
                         protekleMiliSekunde = SystemClock.elapsedRealtime() - chronometer.getBase();
                         int brSek = Math.round(protekleMiliSekunde / 1000);
                         skor -= brSek;
-                        Score score = new Score(skor, "2020-05-05", brSek, player);
+                        Score score = new Score(skor, level, brSek, player);
                         viewModel.insert(score);
                         Intent intent = new Intent(GameActivity.this, ScoreboardActivity.class);
                         intent.putExtra(ScoreboardActivity.EXTRA_SCORE, score);
@@ -300,7 +301,7 @@ public class GameActivity extends AppCompatActivity {
                         protekleMiliSekunde = SystemClock.elapsedRealtime() - chronometer.getBase();
                         int brSek = Math.round(protekleMiliSekunde / 1000);
                         skor -= brSek;
-                        Score score = new Score(skor, "2020-05-05", brSek, player);
+                        Score score = new Score(skor, level, brSek, player);
                         viewModel.insert(score);
                         Intent intent = new Intent(GameActivity.this, ScoreboardActivity.class);
                         intent.putExtra(ScoreboardActivity.EXTRA_SCORE, score);
@@ -330,7 +331,7 @@ public class GameActivity extends AppCompatActivity {
                         protekleMiliSekunde = SystemClock.elapsedRealtime() - chronometer.getBase();
                         int brSek = Math.round(protekleMiliSekunde / 1000);
                         skor -= brSek;
-                        Score score = new Score(skor, "2020-05-05", brSek, player);
+                        Score score = new Score(skor, level, brSek, player);
                         viewModel.insert(score);
                         Intent intent = new Intent(GameActivity.this, ScoreboardActivity.class);
                         intent.putExtra(ScoreboardActivity.EXTRA_SCORE, score);
