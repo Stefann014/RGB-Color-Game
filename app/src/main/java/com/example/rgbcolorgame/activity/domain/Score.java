@@ -7,7 +7,7 @@ import androidx.room.PrimaryKey;
 import java.io.Serializable;
 
 @Entity(tableName = "rezultat_table")
-public class Rezultat implements Serializable {
+public class Score implements Serializable {
 
     @PrimaryKey(autoGenerate = true)
     int rezultatID;
@@ -17,10 +17,10 @@ public class Rezultat implements Serializable {
     int vremeSekundi;
     String igrac;
 
-    public Rezultat() {
+    public Score() {
     }
 
-    public Rezultat(int rezultat, String datum, int vremeSekundi, String igrac) {
+    public Score(int rezultat, String datum, int vremeSekundi, String igrac) {
         this.rezultat = rezultat;
         this.datum = datum;
         this.vremeSekundi = vremeSekundi;

@@ -6,14 +6,14 @@ import androidx.annotation.NonNull;
 import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.LiveData;
 
-import com.example.rgbcolorgame.activity.domain.Rezultat;
+import com.example.rgbcolorgame.activity.domain.Score;
 import com.example.rgbcolorgame.activity.repository.Repository;
 
 import java.util.List;
 
 public class ViewModel extends AndroidViewModel {
     private Repository repository;
-    private LiveData<List<Rezultat>> rezultati;
+    private LiveData<List<Score>> rezultati;
 
     public ViewModel(@NonNull Application application) {
         super(application);
@@ -21,23 +21,23 @@ public class ViewModel extends AndroidViewModel {
         rezultati = repository.getRezultati();
     }
 
-    public void insert(Rezultat rezultat) {
-        repository.insert(rezultat);
+    public void insert(Score score) {
+        repository.insert(score);
     }
 
-    public void update(Rezultat rezultat) {
-        repository.update(rezultat);
+    public void update(Score score) {
+        repository.update(score);
     }
 
-    public void delete(Rezultat rezultat) {
-        repository.delete(rezultat);
+    public void delete(Score score) {
+        repository.delete(score);
     }
 
     public void deleteAllRezultati() {
         repository.deleteAllRezultati();
     }
 
-    public LiveData<List<Rezultat>> getRezultati() {
+    public LiveData<List<Score>> getRezultati() {
         return rezultati;
     }
 }

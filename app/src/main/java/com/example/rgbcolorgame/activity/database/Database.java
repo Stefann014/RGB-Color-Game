@@ -9,16 +9,16 @@ import androidx.room.Room;
 import androidx.room.RoomDatabase;
 import androidx.sqlite.db.SupportSQLiteDatabase;
 
-import com.example.rgbcolorgame.activity.dao.RezultatDAO;
-import com.example.rgbcolorgame.activity.domain.Rezultat;
+import com.example.rgbcolorgame.activity.dao.ScoreDAO;
+import com.example.rgbcolorgame.activity.domain.Score;
 
 
-@androidx.room.Database(entities = {Rezultat.class}, version = 1)
+@androidx.room.Database(entities = {Score.class}, version = 1)
 public abstract class Database extends RoomDatabase {
 
     private static Database instance;
 
-    public abstract RezultatDAO rezultatDAO();
+    public abstract ScoreDAO rezultatDAO();
 
     //singleton pattern
     public static synchronized Database getInstance(Context context) {
@@ -41,23 +41,23 @@ public abstract class Database extends RoomDatabase {
     };
 
     private static class PopulateDbAsyncTask extends AsyncTask<Void, Void, Void> {
-        private RezultatDAO rezultatDAO;
+        private ScoreDAO scoreDAO;
 
 
         private PopulateDbAsyncTask(Database db) {
-            rezultatDAO = db.rezultatDAO();
+            scoreDAO = db.rezultatDAO();
 
         }
 
         @Override
         protected Void doInBackground(Void... voids) {
-            dodajOpsteNapomene(rezultatDAO);
+            dodajOpsteNapomene(scoreDAO);
 
             return null;
         }
     }
 
-    private static void dodajOpsteNapomene(RezultatDAO rezultatDAO) {
+    private static void dodajOpsteNapomene(ScoreDAO scoreDAO) {
 
     }
 }

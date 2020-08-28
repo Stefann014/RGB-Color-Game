@@ -1,6 +1,7 @@
 package com.example.rgbcolorgame.activity.activity;
 
 import android.app.AlertDialog;
+import android.content.Intent;
 import android.os.Bundle;
 import android.widget.Toast;
 
@@ -14,18 +15,22 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.rgbcolorgame.R;
-import com.example.rgbcolorgame.activity.adapter.RezultatAdapter;
-import com.example.rgbcolorgame.activity.domain.Rezultat;
+import com.example.rgbcolorgame.activity.adapter.ScoreAdapter;
+import com.example.rgbcolorgame.activity.domain.Score;
 import com.example.rgbcolorgame.activity.viewModel.ViewModel;
 
 import java.util.List;
 
 public class ScoreboardActivity extends AppCompatActivity {
 
+    public static final String EXTRA_SCORE =
+            "com.example.malipcelar.activity.activity.EXTRA_SCORE";
+
     RecyclerView recyclerView;
-    List<Rezultat> rezultati;
-    final RezultatAdapter adapter = new RezultatAdapter();
+    List<Score> rezultati;
+    final ScoreAdapter adapter = new ScoreAdapter();
     ViewModel viewModel;
+    Score score;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -33,12 +38,29 @@ public class ScoreboardActivity extends AppCompatActivity {
         setContentView(R.layout.activity_scoreboard);
 
         srediAtribute();
+        srediIntent();
         srediViewModel();
         srediBrisanje();
+        poruka2();
+    }
+
+    private void poruka2() {
+        if (score != null) {
+            String buffer = "\n" + score.getRezultat() + " points is your score!\n\n" + score.getVremeSekundi() + " seconds\n";
+            prikaziPoruku("Your score, " + score.getIgrac(), buffer);
+        }
+    }
+
+    private void srediIntent() {
+        Intent intent = getIntent();
+        if (intent.hasExtra(EXTRA_SCORE)) {
+            score = (Score) intent.getSerializableExtra(EXTRA_SCORE);
+        }
     }
 
     private void srediAtribute() {
         recyclerView = findViewById(R.id.rvScoreboard);
+        score = null;
         rezultati = null;
         srediRV();
     }
@@ -57,9 +79,9 @@ public class ScoreboardActivity extends AppCompatActivity {
     }
 
     private void srediObserver() {
-        viewModel.getRezultati().observe(this, new Observer<List<Rezultat>>() {
+        viewModel.getRezultati().observe(this, new Observer<List<Score>>() {
             @Override
-            public void onChanged(@Nullable List<Rezultat> rezultati) {
+            public void onChanged(@Nullable List<Score> rezultati) {
                 ScoreboardActivity.this.rezultati = rezultati;
                 if (ScoreboardActivity.this.rezultati != null && ScoreboardActivity.this.rezultati.size() == 0) {
                     poruka();
@@ -99,4 +121,10 @@ public class ScoreboardActivity extends AppCompatActivity {
 
     }
 
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        Intent intent = new Intent(ScoreboardActivity.this, HomeActivity.class);
+        startActivity(intent);
+    }
 }

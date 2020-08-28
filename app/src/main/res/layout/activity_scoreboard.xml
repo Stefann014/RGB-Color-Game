@@ -6,7 +6,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#353537"
+    android:background="@drawable/your_score"
     tools:context=".activity.activity.ScoreboardActivity">
 
     <androidx.recyclerview.widget.RecyclerView

@@ -10,7 +10,9 @@
         android:roundIcon="@drawable/logo"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".activity.activity.ScoreboardActivity" />
+        <activity
+            android:name=".activity.activity.ScoreboardActivity"
+            android:parentActivityName=".activity.activity.HomeActivity" />
         <activity
             android:name=".activity.activity.GameActivity"
             android:theme="@style/Theme.AppCompat.DayNight.NoActionBar" />

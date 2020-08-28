@@ -7,102 +7,102 @@ import android.os.AsyncTask;
 import androidx.annotation.NonNull;
 import androidx.lifecycle.LiveData;
 
-import com.example.rgbcolorgame.activity.dao.RezultatDAO;
+import com.example.rgbcolorgame.activity.dao.ScoreDAO;
 import com.example.rgbcolorgame.activity.database.Database;
-import com.example.rgbcolorgame.activity.domain.Rezultat;
+import com.example.rgbcolorgame.activity.domain.Score;
 
 import java.util.List;
 
 public class Repository {
 
 
-    private RezultatDAO rezultatDAO;
-    private LiveData<List<Rezultat>> rezultati;
+    private ScoreDAO scoreDAO;
+    private LiveData<List<Score>> rezultati;
 
 
     public Repository(Application application) {
         Database database = Database.getInstance(application);
-        rezultatDAO = database.rezultatDAO();
-        rezultati = rezultatDAO.getAllRezultati();
+        scoreDAO = database.rezultatDAO();
+        rezultati = scoreDAO.getAllRezultati();
     }
 
     // za svaku operaciju je neophodna posebna asinhrona u pozadini
 
-    public void insert(Rezultat rezultat) {
-        new InsertRezultatAsyncTask(rezultatDAO).execute(rezultat);
+    public void insert(Score score) {
+        new InsertRezultatAsyncTask(scoreDAO).execute(score);
     }
 
-    public void update(Rezultat rezultat) {
-        new UpdateRezultatAsyncTask(rezultatDAO).execute(rezultat);
+    public void update(Score score) {
+        new UpdateRezultatAsyncTask(scoreDAO).execute(score);
     }
 
-    public void delete(Rezultat rezultat) {
-        new DeleteRezultatAsyncTask(rezultatDAO).execute(rezultat);
+    public void delete(Score score) {
+        new DeleteRezultatAsyncTask(scoreDAO).execute(score);
     }
 
     public void deleteAllRezultati() {
-        new DeleteAllRezultatAsyncTask(rezultatDAO).execute();
+        new DeleteAllRezultatAsyncTask(scoreDAO).execute();
     }
 
-    public LiveData<List<Rezultat>> getRezultati() {
+    public LiveData<List<Score>> getRezultati() {
         return rezultati;
     }
 
 
 /////////////////// da ne bi pukla aplikacija ovo moramo raditi u pozadini, livedata je automatski sinhronizovan
 
-    private static class InsertRezultatAsyncTask extends AsyncTask<Rezultat, Void, Void> {
-        private RezultatDAO rezultatDAO;
+    private static class InsertRezultatAsyncTask extends AsyncTask<Score, Void, Void> {
+        private ScoreDAO scoreDAO;
 
-        private InsertRezultatAsyncTask(RezultatDAO rezultatDAO) {
-            this.rezultatDAO = rezultatDAO;
+        private InsertRezultatAsyncTask(ScoreDAO scoreDAO) {
+            this.scoreDAO = scoreDAO;
         }
 
         @Override
-        protected Void doInBackground(@NonNull Rezultat... rezultati) {
-            rezultatDAO.insert(rezultati[0]);
+        protected Void doInBackground(@NonNull Score... rezultati) {
+            scoreDAO.insert(rezultati[0]);
             return null;
         }
     }
 
-    private static class UpdateRezultatAsyncTask extends AsyncTask<Rezultat, Void, Void> {
-        private RezultatDAO rezultatDAO;
+    private static class UpdateRezultatAsyncTask extends AsyncTask<Score, Void, Void> {
+        private ScoreDAO scoreDAO;
 
-        private UpdateRezultatAsyncTask(RezultatDAO rezultatDAO) {
-            this.rezultatDAO = rezultatDAO;
+        private UpdateRezultatAsyncTask(ScoreDAO scoreDAO) {
+            this.scoreDAO = scoreDAO;
         }
 
         @Override
-        protected Void doInBackground(@NonNull Rezultat... rezultati) {
-            rezultatDAO.update(rezultati[0]);
+        protected Void doInBackground(@NonNull Score... rezultati) {
+            scoreDAO.update(rezultati[0]);
             return null;
         }
     }
 
-    private static class DeleteRezultatAsyncTask extends AsyncTask<Rezultat, Void, Void> {
-        private RezultatDAO rezultatDAO;
+    private static class DeleteRezultatAsyncTask extends AsyncTask<Score, Void, Void> {
+        private ScoreDAO scoreDAO;
 
-        private DeleteRezultatAsyncTask(RezultatDAO rezultatDAO) {
-            this.rezultatDAO = rezultatDAO;
+        private DeleteRezultatAsyncTask(ScoreDAO scoreDAO) {
+            this.scoreDAO = scoreDAO;
         }
 
         @Override
-        protected Void doInBackground(@NonNull Rezultat... rezultati) {
-            rezultatDAO.delete(rezultati[0]);
+        protected Void doInBackground(@NonNull Score... rezultati) {
+            scoreDAO.delete(rezultati[0]);
             return null;
         }
     }
 
     private static class DeleteAllRezultatAsyncTask extends AsyncTask<Void, Void, Void> {
-        private RezultatDAO rezultatDAO;
+        private ScoreDAO scoreDAO;
 
-        private DeleteAllRezultatAsyncTask(RezultatDAO rezultatDAO) {
-            this.rezultatDAO = rezultatDAO;
+        private DeleteAllRezultatAsyncTask(ScoreDAO scoreDAO) {
+            this.scoreDAO = scoreDAO;
         }
 
         @Override
         protected Void doInBackground(Void... voids) {
-            rezultatDAO.deleteAllRezultati();
+            scoreDAO.deleteAllRezultati();
             return null;
         }
     }

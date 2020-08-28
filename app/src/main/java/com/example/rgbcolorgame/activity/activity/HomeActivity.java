@@ -3,9 +3,11 @@ package com.example.rgbcolorgame.activity.activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
+import android.view.animation.RotateAnimation;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -22,6 +24,7 @@ public class HomeActivity extends AppCompatActivity {
     Button btnScoreBoard;
     Spinner spLevel;
     TextView txtPlayerName;
+    ImageView image;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -29,6 +32,7 @@ public class HomeActivity extends AppCompatActivity {
         setContentView(R.layout.activity_home);
 
         srediAtribute();
+        rotate();
         srediSpinner();
         srediListenere();
     }
@@ -58,6 +62,23 @@ public class HomeActivity extends AppCompatActivity {
                 startActivity(intent);
             }
         });
+
+        image.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                rotate();
+
+            }
+        });
+
+    }
+
+    private void rotate() {
+        RotateAnimation rotateAnimation=new RotateAnimation(0, 360, RotateAnimation.RELATIVE_TO_SELF,
+                .5f, RotateAnimation.RELATIVE_TO_SELF
+                ,.5f);
+        rotateAnimation.setDuration(5000);
+        image.startAnimation(rotateAnimation);
     }
 
     private void srediSpinner() {
@@ -87,5 +108,6 @@ public class HomeActivity extends AppCompatActivity {
         spLevel = findViewById(R.id.spLevel);
         btnScoreBoard = findViewById(R.id.btnScoreboard);
         btnPlay = findViewById(R.id.btnPlay);
+        image = findViewById(R.id.logoImage);
     }
 }

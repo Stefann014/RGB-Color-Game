@@ -7,25 +7,25 @@ import androidx.room.Insert;
 import androidx.room.Query;
 import androidx.room.Update;
 
-import com.example.rgbcolorgame.activity.domain.Rezultat;
+import com.example.rgbcolorgame.activity.domain.Score;
 
 import java.util.List;
 
 @Dao
-public interface RezultatDAO {
+public interface ScoreDAO {
     @Insert
-    void insert(Rezultat rezultat);
+    void insert(Score score);
 
     @Update
-    void update(Rezultat rezultat);
+    void update(Score score);
 
     @Delete
-    void delete(Rezultat rezultat);
+    void delete(Score score);
 
     @Query("DELETE FROM rezultat_table")
     void deleteAllRezultati();
 
 
     @Query("SELECT * FROM rezultat_table ORDER BY rezultat DESC")
-    LiveData<List<Rezultat>> getAllRezultati();
+    LiveData<List<Score>> getAllRezultati();
 }

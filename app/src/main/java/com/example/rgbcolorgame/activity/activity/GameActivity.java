@@ -18,7 +18,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.ViewModelProvider;
 
 import com.example.rgbcolorgame.R;
-import com.example.rgbcolorgame.activity.domain.Rezultat;
+import com.example.rgbcolorgame.activity.domain.Score;
 import com.example.rgbcolorgame.activity.viewModel.ViewModel;
 
 import java.util.Random;
@@ -239,8 +239,12 @@ public class GameActivity extends AppCompatActivity {
                         chronometer.stop();
                         protekleMiliSekunde = SystemClock.elapsedRealtime() - chronometer.getBase();
                         int brSek = Math.round(protekleMiliSekunde / 1000);
-                        Rezultat rezultat = new Rezultat(skor, "2020-05-05", brSek, player);
-                        viewModel.insert(rezultat);
+                        skor -= brSek;
+                        Score score = new Score(skor, "2020-05-05", brSek, player);
+                        viewModel.insert(score);
+                        Intent intent = new Intent(GameActivity.this, ScoreboardActivity.class);
+                        intent.putExtra(ScoreboardActivity.EXTRA_SCORE, score);
+                        startActivity(intent);
                     }
                     Log.d("SKOR", skor + "");
                 } else {
@@ -265,8 +269,12 @@ public class GameActivity extends AppCompatActivity {
                         chronometer.stop();
                         protekleMiliSekunde = SystemClock.elapsedRealtime() - chronometer.getBase();
                         int brSek = Math.round(protekleMiliSekunde / 1000);
-                        Rezultat rezultat = new Rezultat(skor, "2020-05-05", brSek, player);
-                        viewModel.insert(rezultat);
+                        skor -= brSek;
+                        Score score = new Score(skor, "2020-05-05", brSek, player);
+                        viewModel.insert(score);
+                        Intent intent = new Intent(GameActivity.this, ScoreboardActivity.class);
+                        intent.putExtra(ScoreboardActivity.EXTRA_SCORE, score);
+                        startActivity(intent);
                     }
                     Log.d("SKOR", skor + "");
                 } else {
@@ -291,8 +299,12 @@ public class GameActivity extends AppCompatActivity {
                         chronometer.stop();
                         protekleMiliSekunde = SystemClock.elapsedRealtime() - chronometer.getBase();
                         int brSek = Math.round(protekleMiliSekunde / 1000);
-                        Rezultat rezultat = new Rezultat(skor, "2020-05-05", brSek, player);
-                        viewModel.insert(rezultat);
+                        skor -= brSek;
+                        Score score = new Score(skor, "2020-05-05", brSek, player);
+                        viewModel.insert(score);
+                        Intent intent = new Intent(GameActivity.this, ScoreboardActivity.class);
+                        intent.putExtra(ScoreboardActivity.EXTRA_SCORE, score);
+                        startActivity(intent);
                     }
                     Log.d("SKOR", skor + "");
                 } else {
@@ -317,8 +329,12 @@ public class GameActivity extends AppCompatActivity {
                         chronometer.stop();
                         protekleMiliSekunde = SystemClock.elapsedRealtime() - chronometer.getBase();
                         int brSek = Math.round(protekleMiliSekunde / 1000);
-                        Rezultat rezultat = new Rezultat(skor, "2020-05-05", brSek, player);
-                        viewModel.insert(rezultat);
+                        skor -= brSek;
+                        Score score = new Score(skor, "2020-05-05", brSek, player);
+                        viewModel.insert(score);
+                        Intent intent = new Intent(GameActivity.this, ScoreboardActivity.class);
+                        intent.putExtra(ScoreboardActivity.EXTRA_SCORE, score);
+                        startActivity(intent);
                     }
 
                     Log.d("SKOR", skor + "");
