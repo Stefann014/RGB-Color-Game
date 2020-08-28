@@ -3,11 +3,16 @@ package com.example.rgbcolorgame.activity.activity;
 import android.app.AlertDialog;
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
+import android.view.inputmethod.EditorInfo;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.SearchView;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.ItemTouchHelper;
@@ -28,7 +33,7 @@ public class ScoreboardActivity extends AppCompatActivity {
 
     RecyclerView recyclerView;
     List<Score> rezultati;
-    final ScoreAdapter adapter = new ScoreAdapter();
+    ScoreAdapter adapter;
     ViewModel viewModel;
     Score score;
 
@@ -36,12 +41,22 @@ public class ScoreboardActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_scoreboard);
-
+        setTitle("Search...");
         srediAtribute();
         srediIntent();
         srediViewModel();
-        srediBrisanje();
         poruka2();
+    }
+
+    private void srediAdapter(List<Score> scores) {
+        adapter = new ScoreAdapter(scores);
+        srediRV();
+        adapter.submitList(rezultati);
+        srediOstatak();
+    }
+
+    private void srediOstatak() {
+        srediBrisanje();
     }
 
     private void poruka2() {
@@ -86,7 +101,7 @@ public class ScoreboardActivity extends AppCompatActivity {
                 if (ScoreboardActivity.this.rezultati != null && ScoreboardActivity.this.rezultati.size() == 0) {
                     poruka();
                 }
-                adapter.submitList(ScoreboardActivity.this.rezultati);
+                srediAdapter(ScoreboardActivity.this.rezultati);
             }
         });
     }
@@ -127,4 +142,27 @@ public class ScoreboardActivity extends AppCompatActivity {
         Intent intent = new Intent(ScoreboardActivity.this, HomeActivity.class);
         startActivity(intent);
     }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.filter_menu, menu);
+        MenuItem pretraga = menu.findItem(R.id.action_search);
+        SearchView txtPretraga = (SearchView) pretraga.getActionView();
+        txtPretraga.setImeOptions(EditorInfo.IME_ACTION_DONE);
+        txtPretraga.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+            @Override
+            public boolean onQueryTextSubmit(String query) {
+                return false;
+            }
+
+            @Override
+            public boolean onQueryTextChange(String newText) {
+                adapter.getFilter().filter(newText);
+                return false;
+            }
+        });
+        return true;
+    }
+
 }

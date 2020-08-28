@@ -4,6 +4,8 @@ import android.annotation.SuppressLint;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Filter;
+import android.widget.Filterable;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -16,12 +18,19 @@ import com.example.rgbcolorgame.activity.domain.Score;
 
 import org.jetbrains.annotations.NotNull;
 
-public class ScoreAdapter extends ListAdapter<Score, ScoreAdapter.RezultatHolder> {
+import java.util.ArrayList;
+import java.util.List;
+
+public class ScoreAdapter extends ListAdapter<Score, ScoreAdapter.RezultatHolder> implements Filterable {
 
     private OnItemClickListener listener;
+    private List<Score> scores;
+    private List<Score> allScores;
 
-    public ScoreAdapter() {
+    public ScoreAdapter(List<Score> scores) {
         super(DIFF_CALLBACK);
+        this.scores = scores;
+        allScores = new ArrayList<>(this.scores);
     }
 
     private static final DiffUtil.ItemCallback<Score> DIFF_CALLBACK = new DiffUtil.ItemCallback<Score>() {
@@ -94,4 +103,43 @@ public class ScoreAdapter extends ListAdapter<Score, ScoreAdapter.RezultatHolder
     public void setOnItemClickListener(OnItemClickListener listener) {
         this.listener = listener;
     }
+
+    @Override
+    public int getItemCount() {
+        return scores.size();
+    }
+
+    @Override
+    public Filter getFilter() {
+        return filtriraj;
+    }
+
+    private Filter filtriraj = new Filter() {
+
+        @Override
+        protected FilterResults performFiltering(CharSequence constraint) {
+            List<Score> filtriranaLista = new ArrayList<>();
+            if (constraint == null || constraint.length() == 0) {
+                filtriranaLista.addAll(allScores);
+            } else {
+                String parametar = constraint.toString().toLowerCase().trim();
+                for (Score kosnica : allScores) {
+                    if (kosnica.getIgrac().toLowerCase().contains(parametar)) {
+                        filtriranaLista.add(kosnica);
+                    }
+                }
+            }
+            FilterResults rezultat = new FilterResults();
+            rezultat.values = filtriranaLista;
+            return rezultat;
+        }
+
+        @Override
+        protected void publishResults(CharSequence constraint, FilterResults results) {
+            scores.clear();
+            scores.addAll((List) results.values);
+            notifyDataSetChanged();
+        }
+    };
+
 }
