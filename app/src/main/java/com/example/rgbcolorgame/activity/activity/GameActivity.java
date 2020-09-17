@@ -218,7 +218,6 @@ public class GameActivity extends AppCompatActivity {
         chronometer.setOnChronometerTickListener(new Chronometer.OnChronometerTickListener() {
             @Override
             public void onChronometerTick(Chronometer chronometer) {
-
             }
         });
     }

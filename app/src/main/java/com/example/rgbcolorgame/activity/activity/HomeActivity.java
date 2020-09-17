@@ -90,6 +90,7 @@ public class HomeActivity extends AppCompatActivity {
 
         ArrayAdapter<String> adapter = new ArrayAdapter<>(this,
                 R.layout.spinner_size, level);
+
         adapter.setDropDownViewResource(R.layout.spinner_size);
         spLevel.setAdapter(adapter);
         spLevel.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
